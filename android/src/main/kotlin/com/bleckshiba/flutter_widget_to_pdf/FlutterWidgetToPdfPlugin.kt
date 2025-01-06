@@ -1,6 +1,7 @@
 package com.bleckshiba.flutter_widget_to_pdf
 
 import android.content.Context
+import android.util.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -30,22 +31,30 @@ class FlutterWidgetToPdfPlugin : FlutterPlugin, MethodCallHandler {
             result.error("Invalid argument", "imageBytes is null", null)
             return
         }
+
+        val filename =
+            call.argument<String?>("filename") ?: String.format("%s.pdf", Date().time)
+        val pdf = PdfUtil.imageToPdf(imageBytes)
+
         when (Methods.valueOf(call.method)) {
             Methods.SAVE_PDF -> {
-                val filename =
-                    call.argument<String?>("filename") ?: String.format("%s.pdf", Date().time)
-                val pdf = PdfUtil.imageToPdf(context, imageBytes)
                 try {
                     PdfUtil.savePdf(context, filename, pdf)
                     result.success(true)
                 } catch (e: Exception) {
+                    Log.e("WidgetToPdfPlugin", "Error saving PDF", e)
                     result.success(false)
                 }
             }
 
             Methods.SHARE_PDF -> {
-                PdfUtil.sharePdf()
-                result.success(true)
+                try {
+                    PdfUtil.sharePdf(context, pdf, filename)
+                    result.success(true)
+                } catch (e: Exception) {
+                    Log.e("WidgetToPdfPlugin", "Error sharing PDF", e)
+                    result.success(false)
+                }
             }
         }
     }

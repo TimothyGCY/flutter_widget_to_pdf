@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:flutter_widget_to_pdf/PdfArgs.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'flutter_widget_to_pdf_method_channel.dart';
@@ -26,12 +27,8 @@ abstract class FlutterWidgetToPdfPlatform extends PlatformInterface {
   }
 
   /// Save PDF to local file system
-  ///
-  /// [byteData] - image bytes of the PDF content
-  Future<bool> savePdf(Uint8List byteData, {String? filename});
+  Future<bool> savePdf(PdfArgs args);
 
   /// Share PDF to third-party applications
-  ///
-  /// [byteData] - image bytes of the PDF content
-  Future<void> sharePdf(Uint8List byteData);
+  Future<void> sharePdf(PdfArgs args);
 }

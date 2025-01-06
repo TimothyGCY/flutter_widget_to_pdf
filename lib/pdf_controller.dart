@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_widget_to_pdf/PdfArgs.dart';
 import 'package:flutter_widget_to_pdf/flutter_widget_to_pdf.dart';
 
 class PdfController {
@@ -26,11 +27,12 @@ class PdfController {
   }
 
   Future<bool> savePdf({String? filename}) async {
-    return await FlutterWidgetToPdf()
-        .savePdf(await _convertToImage(), filename: filename);
+    return await FlutterWidgetToPdf().savePdf(
+        PdfArgs(imageBytes: await _convertToImage(), filename: filename));
   }
 
-  Future<void> sharePdf() async {
-    await FlutterWidgetToPdf().sharePdf(await _convertToImage());
+  Future<void> sharePdf({String? filename}) async {
+    await FlutterWidgetToPdf().sharePdf(
+        PdfArgs(imageBytes: await _convertToImage(), filename: filename));
   }
 }

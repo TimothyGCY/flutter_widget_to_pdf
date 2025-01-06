@@ -34,17 +34,48 @@ class _MyAppState extends State<MyApp> {
           wrapperKey: _pdfKey,
           controller: _pdfController,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('Row1'),
-              Text('Row2'),
-              Text('Row3'),
-              Text('Row4'),
-              Text('Row5'),
+              SizedBox(height: 56, child: FlutterLogo()),
+              Text(
+                'Row1',
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
+              Text(
+                'Row2',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              Text(
+                'Row3',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              Text(
+                'Row4',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              Text(
+                'Row5',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             ],
           ),
         ),
-        floatingActionButton:
-            FloatingActionButton(onPressed: _pdfController.savePdf),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FloatingActionButton(
+              onPressed: _pdfController.savePdf,
+              tooltip: 'Save to file',
+              child: Icon(Icons.print_outlined),
+            ),
+            const SizedBox(width: 24),
+            FloatingActionButton(
+              onPressed: _pdfController.sharePdf,
+              tooltip: 'Share',
+              child: Icon(Icons.share_outlined),
+            ),
+          ],
+        ),
       ),
     );
   }
