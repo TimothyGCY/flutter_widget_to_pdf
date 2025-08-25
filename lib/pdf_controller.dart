@@ -27,12 +27,12 @@ class PdfController {
   }
 
   Future<bool> savePdf({String? filename}) async {
-    return await FlutterWidgetToPdf().savePdf(
+    return FlutterWidgetToPdf().savePdf(
         PdfArgs(imageBytes: await _convertToImage(), filename: filename));
   }
 
   Future<void> sharePdf({String? filename}) async {
-    await FlutterWidgetToPdf().sharePdf(
+    FlutterWidgetToPdf().sharePdf(
         PdfArgs(imageBytes: await _convertToImage(), filename: filename));
   }
 }
