@@ -16,8 +16,9 @@ class PdfController {
     }
 
     RenderRepaintBoundary boundary =
-        context.findRenderObject() as RenderRepaintBoundary;
-    final image = await boundary.toImage(pixelRatio: 2.0);
+    context.findRenderObject() as RenderRepaintBoundary;
+    final image = await boundary.toImage(
+        pixelRatio: MediaQuery.devicePixelRatioOf(context));
     ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
     if (byteData == null) {
       throw Exception("Failed to generate image");

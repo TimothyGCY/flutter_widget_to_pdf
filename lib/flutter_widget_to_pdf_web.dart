@@ -3,7 +3,9 @@
 // package as the core of your plugin.
 // ignore: avoid_web_libraries_in_flutter
 
+import 'dart:convert';
 import 'dart:html' as html;
+import 'dart:js' as js;
 import 'dart:typed_data';
 
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -21,11 +23,11 @@ class FlutterWidgetToPdfWeb extends FlutterWidgetToPdfPlatform {
   }
 
   bool _downloadPdf(Uint8List bytes, {String? filename}) {
-    final blob = html.Blob([bytes], 'application/pdf');
-    final url = html.Url.createObjectUrlFromBlob(blob);
-    final anchor = html.AnchorElement(href: url)
-      ..download = '${filename ?? DateTime.now().microsecondsSinceEpoch}.pdf'
-      ..click();
+    final base64Image = "data:image/png;base64,${base64Encode(bytes)}";
+    js.context.callMethod("savePdf", [
+      base64Image,
+      "${filename ?? DateTime.now().microsecondsSinceEpoch}.pdf"
+    ]);
     return true;
   }
 

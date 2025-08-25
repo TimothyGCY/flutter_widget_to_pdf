@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -27,12 +28,24 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
   <title>flutter_widget_to_pdf_example</title>
   <link rel="manifest" href="manifest.json">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.1/jspdf.umd.min.js"></script>
 </head>
+
 <body>
   <script src="flutter_bootstrap.js" async></script>
+  <script>
+    window.savePdf = function (base64Image, filename) {
+      const {jsPDF} = window.jspdf;
+      const pdf = new jsPDF();
+      pdf.addImage(base64Image, 'PNG', 0, 0, 210, 297);
+      pdf.save(filename);
+    };
+  </script>
 </body>
+
 </html>

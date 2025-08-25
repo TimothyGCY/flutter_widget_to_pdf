@@ -44,5 +44,29 @@ void sharePDF() {
 }
 ```
 
-> **> [!NOTE]
-> For Web, `sharePdf()` works exactly the same as `savePdf()`
+### Additonal
+
+For Web, kindly add the following code to `index.html`
+
+```html
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <script>
+        window.savePdf = function (base64Image, filename) {
+            const {jsPDF} = window.jspdf;
+            const pdf = new jsPDF();
+            pdf.addImage(base64Image, 'PNG', 0, 0, 210, 297);
+            pdf.save(filename);
+        }
+    </script>
+</body>
+</html>
+```
+
+
+> **Note**
+> `sharePdf()` works exactly the same as `savePdf()`
+
